@@ -1,0 +1,830 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">گھٹکا ماڈیول</h2>
+    <div class="row">
+
+            <div class="card p-4 shadow-sm" style="background-color: #f1f1f1;">
+
+
+                <form id="supplier-form">
+                    <div class = "row">
+                    <div class="col-md-6">
+                        <h4 class="text-center">سپلائر</h4>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">نام</label>
+                            <select id="supplier-name" class="form-select" required>
+
+                                    {% for sup in suppliers %}
+                                    <option value="{{ sup.name }}" supp_id = "{{ sup.id }}" >{{ sup.name }}</option>
+                                    {% endfor %}
+                            </select>
+
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">کھاتہ صفحہ نمبر</label>
+                            <input type="text" class="form-control" id="supplier-id" value >
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">تاریخ</label>
+                            <input type="date" class="form-control" name="date" id="supplier-date" required>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="form-label">وصول</label>
+                            <input type="checkbox" class="form-check-input" id = "supplier-wasool" name="wasool">
+                        </div>
+                    </div>
+                     <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">بل</label>
+                            <select id="supplier-new-bill" name="new_bill" class="form-select">
+                                <option value="نیا بل">نیا بل</option>
+                                <option value="پہلا بل">پہلا بل</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">کیا یہ بل امانت ہے؟</label>
+                            <select name="imanat" class="form-select">
+                                <option value="جی">جی</option>
+                                <option value="نہیں">نہیں</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">گاڑی نمبر</label>
+                            <input type="text" class="form-control" name="car_number" id = "car_number">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">تفصیل</label>
+                            <input type="text" class="form-control" name="details">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">مارکہ</label>
+                            <input type="text" class="form-control" name="mark" id = "maarkah">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">تاریخ گاڈی امد</label>
+                            <input type="date" class="form-control" name="car_date_one" id = "car_date_one">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">تاریخ گاڈی نکاسی</label>
+                            <input type="date" class="form-control" name="car_date_two" id = "car_date_two">
+                        </div>
+                    </div>
+
+
+                        </div>
+                    <div class="col-md-6">
+                        <h4 class="text-center">خریدار</h4>
+                        <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">نام</label>
+                            <select id="customer-name" class="form-select" required>
+
+                                    {% for cust in customers %}
+                                    <option value="{{ cust.name }}" cust_id = "{{ cust.id }}">{{ cust.name }}</option>
+                                    {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">کھاتہ صفحہ نمبر</label>
+                            <input type="text" class="form-control" id="customer-id" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">نوعیت</label>
+                            <select name="noeeyat" class="form-select" id = "noeeyat">
+                                <option value="دیگر">دیگر</option>
+                                <option value="کیلا/خربوزہ"> کیلا/خربوزہ</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">تفصیل بکری</label>
+                            <select id="product-name" class="form-select" name="detail_bikri">
+
+                                {% for product in products %}
+                                    <option value="{{ product.name }}" data-commission="{{ product.commission }}"
+                                            data-mazdoori="{{ product.mazdoori }}"
+                                            data-market_fees="{{ product.market_fees }}">{{ product.name }}</option>
+                                {% endfor %}
+                            </select>
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">پیٹی/دانہ</label>
+                            <select name="paiti" class="form-select">
+                                <option value="پیٹی">پیٹی</option>
+                                <option value="دانہ">دانہ</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">پیٹی نمبر</label>
+                            <input type="text" class="form-control" name="paiti_number">
+
+
+                        </div>
+                    </div>
+                     <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">نگ</label>
+                            <input type="text" class="form-control" id = "neg" name="neg">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">چونگی</label>
+                            <input type="text" class="form-control" id="chongi" name="chongi">
+
+
+                        </div>
+                         <div class="col-md-4">
+                            <label class="form-label">روپیہ</label>
+                            <input type="text" class="form-control" id = "ropeh" name="ropeh">
+
+
+                        </div>
+                    </div>
+                    </div>
+                        </div>
+                     <button type="button" class="btn btn-primary w-100" onclick="addSupplierEntry()">شامل کریں</button>
+
+                </form>
+
+        </div>
+
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card p-4 shadow-sm">
+                <h4 class="text-center">ریکارڈز</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>نام پھل</th>
+                            <th>نگ</th>
+                            <th>روپیہ</th>
+                            <th>ٹوٹل</th>
+                            <th>چونگی</th>
+                            <th>نام خریدار</th>
+                            <th>حذف کریں</th>
+                        </tr>
+                    </thead>
+                    <tbody id="record-table">
+                    {%if editing %}
+                    {% for record in records %}
+                        <tr>
+                            <td>{{ record.product }}</td>
+                            <td>{{ record.neg }}</td>
+                            <td>{{ record.ropeh }}</td>
+                            <td>{{ record.total }}</td>
+                            <td>{{ record.chungi }}</td>
+                            <td>{{ record.customer_name }}</td>
+                            <td><button type="button" class="btn btn-danger btn-sm" onclick='removeRow(this)'>حذف</button></td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card p-4 shadow-sm">
+                <h4 class="text-center">اخراجات</h4>
+
+                <form id="expense-form">
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label class="form-label">کمیشن</label>
+            <input type="text" class="form-control" id="commission" value="{% if editing %}{{ bill.commission }}{% else %}0{% endif %}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">مزدوری</label>
+            <input type="text" class="form-control" id="wages" value="{% if editing %}{{ bill.mazdoori }}{% else %}0{% endif %}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">کرایہ لاری</label>
+            <input type="text" class="form-control" id="rent" value="{% if editing %}{{ bill.rent_laari }}{% else %}0{% endif %}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">مارکیٹ فیس</label>
+            <input type="text" class="form-control" id="market_fee" value="{% if editing %}{{ bill.market_fees }}{% else %}0{% endif %}">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label class="form-label">منشیانہ</label>
+            <input type="text" class="form-control" id="munshi" value="{% if editing %}{{ bill.munshiyana }}{% else %}0{% endif %}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">نقد</label>
+            <input type="text" class="form-control" id="nagad" value="{% if editing %}{{ bill.nagad }}{% else %}0{% endif %}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">ڈاگ و تار</label>
+            <input type="text" class="form-control" id="dagh_tar" value="{% if editing %}{{ bill.daag }}{% else %}1{% endif %}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">کرایہ سٹور</label>
+            <input type="text" class="form-control" id="rent_store" value="{% if editing %}{{ bill.extra_rent }}{% else %}0{% endif %}">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label class="form-label">کسٹم ڈیوٹی</label>
+            <input type="text" class="form-control" id="cost_duty" value="{% if editing %}{{ bill.custom }}{% else %}0{% endif %}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">امانت کاٹ</label>
+            <input type="text" class="form-control" id="emant" value="{% if editing %}{{ bill.amanat }}{% else %}0{% endif %}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">چونگی</label>
+            <input type="text" class="form-control" id="chungi" value="{% if editing %}{{ bill.chungi }}{% else %}0{% endif %}">
+        </div>
+    </div>
+</form>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card p-4 shadow-sm">
+                <h4 class="text-center">میزان اخراجات</h4>
+                <div class="row-md-12" id="expense">
+                    <br>
+                    <div class="col-md-10" id="">
+                        <div class="mb-3 d-flex align-items-center">
+                    <label for="خام" class="form-label me-2" style="min-width: 100px;">خام بکری</label>
+                     <input type="text" class="form-control" id="خام" value="{% if editing %}{{ bill.kham_bikri }}{% else %}0{% endif %}">
+                    </div>
+
+                        <div class="mb-3 d-flex align-items-center">
+                    <label for="اخراجات" class="form-label me-2" style="min-width: 100px;">اخراجات</label>
+                     <input type="text" class="form-control" id="اخراجات" value="{% if editing %}{{ bill.expense }}{% else %}0{% endif %}">
+                    </div>
+
+                        <div class="mb-3 d-flex align-items-center">
+                    <label  class="form-label me-2" style="min-width: 100px;">پختہ بکری</label>
+                     <input type="text" class="form-control" id="پختہ" value="{% if editing %}{{ bill.kham_bikri - bill.expense }}{% else %}0{% endif %}">
+                    </div>
+                    <input type="hidden" id="bill-id" value="{{ bill.id if editing else '' }}">
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row mt-4">
+        {% if editing %}
+        <div class="col-md-12 text-center">
+            <button type="button" class="btn btn-success" onclick="editData()">تبدیل کریں</button>
+        </div>
+        {% else %}
+        <div class="col-md-12 text-center">
+            <button type="button" class="btn btn-success" onclick="saveData()">محفوظ کریں</button>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<br>
+
+<script>
+
+var isEditing = {% if editing %}true{% else %}false{% endif %};
+var pageLoaded = false;
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const dateInput = document.getElementById("supplier-date");
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+
+    const dateInput_1 = document.getElementById("car_date_one");
+    const today_1 = new Date().toISOString().split('T')[0];
+    dateInput_1.value = today_1;
+
+    const dateInput_2 = document.getElementById("car_date_two");
+    const today_2 = new Date().toISOString().split('T')[0];
+    dateInput_2.value = today_2;
+
+
+    loadRecords();
+    updateKhaamBikri();
+
+    const productSelect = document.getElementById("product-name");
+    const productType = document.getElementById("noeeyat");
+    const commissionInput = document.getElementById("commission");
+    const mazdooriInput = document.getElementById("wages");
+    const marketFeesInput = document.getElementById("market_fee");
+    commissionInput.readOnly = true;
+
+    const chungiField = document.getElementById("chungi");
+    chungiField.readOnly = true;
+
+    const selectedProduct = localStorage.getItem("selectedProduct");
+
+    if (selectedProduct) {
+        [...productSelect.options].forEach(option => {
+            if (option.value === selectedProduct) {
+                option.selected = true;
+            }
+        });
+        updateCommissionValue();
+    } else {
+        commissionInput.value = 0;
+        mazdooriInput.value = 0;
+        marketFeesInput.value = 0;
+    }
+
+    productSelect.addEventListener("change", function () {
+        const selectedOption = this.options[this.selectedIndex];
+
+        const selectedText = selectedOption.textContent.trim();
+
+        if (selectedText === "کیلا" || selectedText === "خربوزہ") {
+        productType.value = "کیلا/خربوزہ";
+        }
+        else
+        {
+        productType.value = "دیگر";
+        }
+
+        const commission = selectedOption.getAttribute("data-commission") || 0;
+        commissionInput.value = commission;
+
+        const wages = selectedOption.getAttribute("data-mazdoori") || 0;
+        mazdooriInput.value = wages;
+
+        const market_fee = selectedOption.getAttribute("data-market_fees") || 0;
+        marketFeesInput.value = market_fee;
+
+        updateCommissionValue();
+        calculateTotalExpense();
+    });
+
+    const fields = [
+        "commission", "wages", "rent", "market_fee",
+        "munshi", "nagad", "dagh_tar", "rent_store",
+        "cost_duty", "emant"
+    ];
+
+    fields.forEach(id => {
+        const field = document.getElementById(id);
+        if (field) {
+            field.addEventListener("input", calculateTotalExpense);
+        }
+    });
+
+    document.getElementById("خام").addEventListener("input", updatePukhtaBikri);
+    document.getElementById("اخراجات").addEventListener("input", updatePukhtaBikri);
+
+    calculateTotalExpense();
+
+
+
+    // 🔽 Auto-fill supplier-id when supplier-name changes
+    const supplierSelect = document.getElementById("supplier-name");
+    const supplierIdInput = document.getElementById("supplier-id");
+    const wasoolCheckbox = document.getElementById("supplier-wasool");
+
+
+
+    supplierSelect.addEventListener("change", function () {
+    const selectedOption = supplierSelect.options[supplierSelect.selectedIndex];
+    const supplierId = selectedOption.getAttribute("supp_id");
+    const selectedText = selectedOption.textContent.trim();  // ✅ Fix here
+
+    supplierIdInput.value = supplierId || '';
+
+    if (selectedText === "غیر کھاتہ دار") {
+        wasoolCheckbox.checked = true;
+    } else {
+        wasoolCheckbox.checked = false;
+    }
+});
+
+    const customerSelect = document.getElementById("customer-name");
+    const customerIdInput = document.getElementById("customer-id");
+
+    customerSelect.addEventListener("change", function () {
+        const selectedOption = customerSelect.options[customerSelect.selectedIndex];
+        const customerId = selectedOption.getAttribute("cust_id");
+        customerIdInput.value = customerId || '';
+    });
+
+});
+
+function addSupplierEntry() {
+    let name = document.getElementById("supplier-name").value;
+    let customerName = document.getElementById("customer-name").value;
+    let product = document.getElementById("product-name").value;
+    let neg = document.getElementById("neg").value;
+    let ropeh = document.getElementById("ropeh").value;
+    let chongi = document.getElementById("chongi").value;
+    let total = parseInt(neg) * parseInt(ropeh);
+
+
+
+    let selectedSupplier = localStorage.getItem("selectedSupplier");
+    let records = JSON.parse(localStorage.getItem("records")) || [];
+
+    if (records.length > 0 && selectedSupplier && selectedSupplier !== name) {
+    alert("آپ صرف ایک ہی سپلائر کا اندراج کر سکتے ہیں: " + selectedSupplier);
+    return;
+    }
+
+
+
+    if (!selectedSupplier) {
+    localStorage.setItem("selectedSupplier", name);
+        }
+
+
+    let record = { product, neg, ropeh, total, chongi, customerName };
+    saveRecordToStorage(record);
+    addRecordToTable(record);
+    updateKhaamBikri();
+    updateCommissionValue();
+    updateChungiFromNegAndChungi();
+    calculateTotalExpense();
+}
+
+function saveRecordToStorage(record) {
+    let records = JSON.parse(localStorage.getItem("records")) || [];
+    records.push(record);
+    localStorage.setItem("records", JSON.stringify(records));
+}
+
+function loadRecords() {
+    let records = JSON.parse(localStorage.getItem("records")) || [];
+    if (records.length > 0) {
+        localStorage.setItem("selectedProduct", records[0].product);
+    }
+    records.forEach(record => addRecordToTable(record));
+    updateKhaamBikri();
+    updateCommissionValue();
+    updateChungiFromNegAndChungi();
+    calculateTotalExpense();
+}
+
+function addRecordToTable(record) {
+    let table = document.getElementById("record-table");
+    let row = table.insertRow();
+
+    const productOptions = document.getElementById("product-name").options;
+    let commissionRate = 0;
+    let mazdooriRate = 0;
+    let market_fees = 0;
+
+    for (let option of productOptions) {
+        if (option.value === record.product) {
+            commissionRate = parseFloat(option.getAttribute("data-commission")) || 0;
+            mazdooriRate = parseFloat(option.getAttribute("data-mazdoori")) || 0;
+            market_fees = parseFloat(option.getAttribute("data-market_fees")) || 0;
+            break;
+        }
+
+    }
+
+
+    row.innerHTML = `
+        <td>${record.product}</td>
+        <td>${record.neg}</td>
+        <td>${record.ropeh}</td>
+        <td>${record.total}</td>
+        <td>${record.chongi}</td>
+        <td>${record.customerName}</td>
+        <td style="display:none ;" class="commission-rate">${commissionRate}</td>
+        <td style="display:none ;" class="mazdoori-rate">${mazdooriRate}</td>
+        <td style="display:none ;" class="market-fees">${market_fees}</td>
+        <td><button class='btn btn-danger btn-sm' onclick='removeRow(this)'>حذف</button></td>`;
+
+
+     updateCommissionValue();
+}
+
+function removeRow(btn) {
+    let row = btn.parentNode.parentNode;
+    let table = document.getElementById("record-table");
+    let index = Array.from(table.rows).indexOf(row);
+    row.remove();
+
+    let records = JSON.parse(localStorage.getItem("records")) || [];
+    records.splice(index, 1);
+    localStorage.setItem("records", JSON.stringify(records));
+
+    if (records.length === 0) {
+        localStorage.removeItem("selectedProduct");
+        localStorage.removeItem("selectedSuppllier");
+    }
+
+    updateKhaamBikri();
+    updateCommissionValue();
+    updateChungiFromNegAndChungi();
+    calculateTotalExpense();
+}
+
+function updateKhaamBikri() {
+    let records = JSON.parse(localStorage.getItem("records")) || [];
+    let totalSum = 0;
+    records.forEach(record => {
+        totalSum += parseInt(record.total) || 0;
+    });
+    document.getElementById("خام").value = totalSum;
+    updatePukhtaBikri();
+    updateCommissionValue();
+}
+
+function updateCommissionValue() {
+    const table = document.getElementById("record-table");
+    let totalCommission = 0;
+    let totalMazdoori = 0;
+    let totalMarketFees = 0;
+
+    for (let i = 0; i < table.rows.length; i++) {
+        const row = table.rows[i];
+        const ropeh = parseFloat(row.cells[3].textContent) || 0;
+        const commissionRateCell = row.querySelector(".commission-rate");
+        const neg = parseFloat(row.cells[1].textContent) || 0;
+        const mazdooriRateCell = row.querySelector(".mazdoori-rate");
+        const marketFeesCell = row.querySelector(".market-fees");
+
+        if (commissionRateCell) {
+            const rate = parseFloat(commissionRateCell.textContent) || 0;
+            totalCommission += (ropeh / 100) * rate;
+        }
+        if (mazdooriRateCell) {
+            const rent = parseFloat(mazdooriRateCell.textContent) || 0;
+            totalMazdoori += neg * rent;
+        }
+        if (marketFeesCell) {
+            const rate = parseFloat(marketFeesCell.textContent) || 0;
+            totalMarketFees += neg * rate;
+        }
+    }
+
+    document.getElementById("commission").value = totalCommission.toFixed(2);
+    document.getElementById("wages").value = totalMazdoori.toFixed(2);
+    document.getElementById("market_fee").value = totalMarketFees.toFixed(2);
+}
+
+
+function calculateTotalExpense() {
+    const fields = [
+        "commission", "wages", "rent", "market_fee",
+        "munshi", "nagad", "dagh_tar", "rent_store",
+        "cost_duty", "emant"
+    ];
+
+    let total = 0;
+    fields.forEach(id => {
+        const value = parseFloat(document.getElementById(id).value) || 0;
+        total += value;
+    });
+
+    document.getElementById("اخراجات").value = total.toFixed(2);
+    updatePukhtaBikri();
+}
+
+function updatePukhtaBikri() {
+    const خام = parseFloat(document.getElementById("خام").value) || 0;
+    const اخراجات = parseFloat(document.getElementById("اخراجات").value) || 0;
+    const پختہ = خام - اخراجات;
+    document.getElementById("پختہ").value = پختہ.toFixed(2);
+}
+
+function updateChungiFromNegAndChungi() {
+    const records = JSON.parse(localStorage.getItem("records")) || [];
+    let totalChungi = 0;
+    records.forEach(record => {
+        const neg = parseFloat(record.neg) || 0;
+        const chungi = parseFloat(record.chongi) || 0;
+        totalChungi += neg * chungi;
+    });
+    document.getElementById("chungi").value = totalChungi.toFixed(2);
+}
+
+function updateKhaamBikriFromTable() {
+    const table = document.getElementById("record-table");
+    let total = 0;
+    for (let i = 0; i < table.rows.length; i++) {
+        const ropeh = parseFloat(table.rows[i].cells[3].textContent) || 0;
+        total += ropeh;
+    }
+    document.getElementById("خام").value = total.toFixed(2);
+}
+
+function updateChungiFromTable() {
+    const table = document.getElementById("record-table");
+    let total = 0;
+    for (let i = 0; i < table.rows.length; i++) {
+        const neg = parseFloat(table.rows[i].cells[1].textContent) || 0;
+        const chungi = parseFloat(table.rows[i].cells[4].textContent) || 0;
+        total += neg * chungi;
+    }
+    document.getElementById("chungi").value = total.toFixed(2);
+}
+
+
+function saveData() {
+    // Collect all the data from the form fields
+    let records = JSON.parse(localStorage.getItem("records")) || [];
+
+    const supplierId = document.getElementById("supplier-id").value; // Get the supplier ID
+    const maarkah = document.getElementById("maarkah").value;
+    const carNumber = document.getElementById("car_number").value;
+    const totalNagg = records.reduce((sum, record) => sum + (parseInt(record.neg) || 0), 0);
+    const khamBikri = document.getElementById("خام").value;
+    const rentLaari = document.getElementById("rent").value;
+    const mazdoori = document.getElementById("wages").value;
+    const daag = document.getElementById("dagh_tar").value;
+    const munshiyana = document.getElementById("munshi").value;
+    const marketFees = document.getElementById("market_fee").value;
+    const chungi = document.getElementById("chungi").value;
+    const amanat = document.getElementById("emant").value;
+    const custom = document.getElementById("cost_duty").value;
+    const extraRent = document.getElementById("rent_store").value;
+    const commission = document.getElementById("commission").value;
+    const pukhtaBikri = document.getElementById("پختہ").value;
+    const createdAt = document.getElementById("supplier-date").value;
+    const dateEntered = document.getElementById("car_date_one").value;
+    const dateOut = document.getElementById("car_date_one").value;
+    const wasool = 0;
+    const nagad = document.getElementById("nagad").value;
+    const totalAmount = document.getElementById("پختہ").value;
+
+
+
+
+    // Create the data object to send to the backend
+    const dataToSave = {
+        bill: {
+            supplier_id: supplierId,
+            maarkah: maarkah,
+            car_number: carNumber,
+            total_nagg: totalNagg,
+            kham_bikri: khamBikri,
+            rent_laari: rentLaari,
+            mazdoori: mazdoori,
+            daag: daag,
+            munshiyana: munshiyana,
+            market_fees: marketFees,
+            chungi: chungi,
+            amanat: amanat,
+            custom: custom,
+            extra_rent: extraRent,
+            commission: commission,
+            pukhta_bikri: pukhtaBikri,
+            created_at: createdAt,
+            date_entered: dateEntered,
+            date_out: dateOut,
+            wasool: wasool,
+            nagad:nagad,
+            total_amount: totalAmount
+        },
+        records: records  // now records are included with the bill
+    };
+
+    // Send the data to the backend using fetch
+    fetch('/ghutka/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSave)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Data saved successfully:', data);
+        if (data.success) {
+            alert('Data saved successfully!');
+        } else {
+            alert('Error saving data: ' + data.error); // Display the error from the backend if any
+        }
+        // Clear localStorage after successful save
+        localStorage.removeItem("records");
+        localStorage.removeItem("selectedProduct");
+        localStorage.removeItem("selectedSuppllier");
+
+        // Clear the form fields and table
+        document.getElementById("record-table").innerHTML = "";
+        document.getElementById("خام").value = "";
+        document.getElementById("commission").value = 0;
+        document.getElementById("اخراجات").value = 0;
+        document.getElementById("پختہ").value = "";
+        document.getElementById("chungi").value = "";
+
+        location.reload();
+
+
+
+    })
+    .catch(error => {
+        console.error('Error saving data:', error);
+        alert("There was an error saving the data. Please try again.");
+    });
+}
+
+function editData() {
+    // Collect all the data from the form fields
+    let records = JSON.parse(localStorage.getItem("records")) || [];
+
+    const billID = document.getElementById("bill-id").value;
+    const totalNagg = records.reduce((sum, record) => sum + (parseInt(record.neg) || 0), 0);
+    const khamBikri = document.getElementById("خام").value;
+    const rentLaari = document.getElementById("rent").value;
+    const mazdoori = document.getElementById("wages").value;
+    const daag = document.getElementById("dagh_tar").value;
+    const munshiyana = document.getElementById("munshi").value;
+    const marketFees = document.getElementById("market_fee").value;
+    const chungi = document.getElementById("chungi").value;
+    const amanat = document.getElementById("emant").value;
+    const custom = document.getElementById("cost_duty").value;
+    const extraRent = document.getElementById("rent_store").value;
+    const commission = document.getElementById("commission").value;
+    const pukhtaBikri = document.getElementById("پختہ").value;
+    const nagad = document.getElementById("nagad").value;
+    const totalAmount = document.getElementById("پختہ").value;
+    const created_at = document.getElementById("supplier-date").value;
+
+    // Create the data object to send to the backend
+    const dataToSave = {
+        bill: {
+            id: billID,
+            total_nagg: totalNagg,
+            kham_bikri: khamBikri,
+            rent_laari: rentLaari,
+            mazdoori: mazdoori,
+            daag: daag,
+            munshiyana: munshiyana,
+            market_fees: marketFees,
+            chungi: chungi,
+            amanat: amanat,
+            custom: custom,
+            extra_rent: extraRent,
+            commission: commission,
+            pukhta_bikri: pukhtaBikri,
+            nagad:nagad,
+            created_at:created_at,
+            total_amount: totalAmount
+        },
+        records: records  // now records are included with the bill
+    };
+
+    // Send the data to the backend using fetch
+    fetch('/ghutka/update_bill', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSave)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Data saved successfully:', data);
+        if (data.success) {
+            alert('Data saved successfully!');
+        } else {
+            alert('Error saving data: ' + data.error); // Display the error from the backend if any
+        }
+        // Clear localStorage after successful save
+        localStorage.removeItem("records");
+        localStorage.removeItem("selectedProduct");
+        localStorage.removeItem("selectedSuppllier");
+
+
+
+
+        location.reload();
+
+
+
+    })
+    .catch(error => {
+        console.error('Error saving data:', error);
+        alert(error);
+    });
+}
+
+</script>
+
+
+
+
+
+
+{% endblock %}

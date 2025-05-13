@@ -1,0 +1,32 @@
+from flask import Blueprint, request, render_template, redirect, url_for, flash
+from app import db
+from app.models.users import Customer
+
+customers_bp = Blueprint('customers', __name__)
+
+@customers_bp.route('/')
+def customer_list():
+    customers = Customer.query.all()
+
+    return render_template('customers/list.html', customers=customers)
+
+@customers_bp.route('/add', methods=['GET', 'POST'])
+def add_customer():
+    customers = Customer.query.all()
+    if request.method == 'POST':
+        name = request.form['name']
+        customer_type = request.form['type']
+        number = request.form['number']
+        address = request.form['address']
+        other_balance = request.form['other_balance']
+        banana_melon_balance = request.form['banana_melon_balance']
+
+        new_customer = Customer(name=name, customer_type=customer_type, phone=number,
+                                address=address, other_balance=other_balance,
+                                banana_melon_balance=banana_melon_balance)
+        db.session.add(new_customer)
+        db.session.commit()
+        flash('customer added successfully', 'success')
+        return redirect(url_for('customers.customer_list'))
+
+    return render_template('customers/add_customers.html', customers = customers)

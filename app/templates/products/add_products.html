@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">سپلائر فارم</h2>
+    <div class="card p-4 shadow-sm" style="background-color: #d6e9f8;">
+        <form method="POST" action="/products/add">
+    <div class="row mb-3">
+        <!-- نام (Name) -->
+        <div class="col-md-6">
+            <label class="form-label">نام</label>
+            <input type="text" class="form-control" name="name" required>
+        </div>
+
+        <!-- (Commission) کمیشن -->
+        <div class="col-md-6">
+            <label class="form-label">کمیشن</label>
+            <input type="text" class="form-control" name="commission" required>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!-- (Mazdoori) -->
+        <div class="col-md-6">
+            <label class="form-label">مزدوری</label>
+            <input type="text" class="form-control" name="mazdoori">
+        </div>
+
+        <!--  (market_fees) -->
+        <div class="col-md-6">
+            <label class="form-label">مارکیٹ فیس</label>
+            <input type="text" class="form-control" name="market_fees">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!-- (rent) -->
+        <div class="col-md-6">
+            <label class="form-label">کرایہ</label>
+            <input type="number" class="form-control" name="rent" value="0">
+        </div>
+        <div class="col-md-6">
+        <label class="form-label"> منشیانہ</label>
+            <input type="text" class="form-control" name="munshiyaana">
+
+    </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary w-100">محفوظ کریں</button>
+</form>
+
+    </div>
+
+    <h3 class="mt-4">اشیاء لسٹ</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>شمار</th>
+                    <th>نام</th>
+                    <th>کمیشن</th>
+                    <th>مزدوری</th>
+                    <th>مارکیٹ فیس</th>
+                    <th>کرایہ</th>
+                    <th>منشیانہ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.commission }}</td>
+                    <td>{{ product.mazdoori }}</td>
+                    <td>{{ product.market_fees }}</td>
+                    <td>{{ product.rent }}</td>
+                    <td>{{ product.munshiyaana }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

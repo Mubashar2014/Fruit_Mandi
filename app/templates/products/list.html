@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <a href="{{ url_for('products.add_product') }}" class="btn btn-primary mb-3">Add Product</a>
+    <h3 class="mt-4" align="center">اشیاء لسٹ</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>شمار</th>
+                    <th>نام</th>
+                    <th>کمیشن</th>
+                    <th>مزدوری</th>
+                    <th>مارکیٹ فیس</th>
+                    <th>کرایہ</th>
+                    <th>منشیانہ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.commission }}</td>
+                    <td>{{ product.mazdoori }}</td>
+                    <td>{{ product.market_fees }}</td>
+                    <td>{{ product.rent }}</td>
+                    <td>{{ product.munshiyaana }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

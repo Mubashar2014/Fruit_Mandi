@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <a href="{{ url_for('customers.add_customer') }}" class="btn btn-primary mb-3">Add Customer</a>
+    <h3 class="mt-4" align="center">کسٹمر لسٹ</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>شمار</th>
+                    <th>نام</th>
+                    <th>نمبر</th>
+                    <th>قسم</th>
+                    <th>پتہ</th>
+                    <th>دیگر بیلنس</th>
+                    <th>کیلا/خربوزہ بیلنس</th>
+                    <th>میزان</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.id }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.number }}</td>
+                    <td>{{ customer.type }}</td>
+                    <td>{{ customer.address }}</td>
+                    <td>{{ customer.other_balance }}</td>
+                    <td>{{ customer.banana_melon_balance }}</td>
+                    <td>{{ customer.banana_melon_balance | int + customer.other_balance | int }}</td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

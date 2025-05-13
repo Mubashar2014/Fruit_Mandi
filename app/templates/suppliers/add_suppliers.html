@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">سپلائر فارم</h2>
+    <div class="card p-4 shadow-sm" style="background-color: #d6e9f8;">
+        <form method="POST" action="/suppliers/add">
+    <div class="row mb-3">
+        <!-- نام (Name) -->
+        <div class="col-md-6">
+            <label class="form-label">نام</label>
+            <input type="text" class="form-control" name="name" required>
+        </div>
+
+        <!-- نمبر (Phone Number) -->
+        <div class="col-md-6">
+            <label class="form-label">نمبر</label>
+            <input type="text" class="form-control" name="number" required>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!-- سپلائر کی قسم (Supplier Type) -->
+        <div class="col-md-6">
+            <label class="form-label">سپلائر کی قسم</label>
+            <select class="form-select" name="supplier_type">
+                <option value="مین سپلائر">مین سپلائر</option>
+                <option value="سب سپلائر">سب سپلائر</option>
+            </select>
+        </div>
+
+        <!-- پتہ (Address) -->
+        <div class="col-md-6">
+            <label class="form-label">پتہ</label>
+            <input type="text" class="form-control" name="address">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!-- بیلنس (Balance) -->
+        <div class="col-md-6">
+            <label class="form-label">بیلنس</label>
+            <input type="number" class="form-control" name="balance" value="0">
+        </div>
+        <div class="col-md-6">
+        <label class="form-label">مین سپلائر</label>
+            <select class="form-select" name="main_supplier">
+                <option value="مین سپلائر">مین سپلائر</option>
+                <option value="سب سپلائر">سب سپلائر</option>
+            </select>
+    </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary w-100">محفوظ کریں</button>
+</form>
+
+    </div>
+
+    <h3 class="mt-4">سپلائر لسٹ</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>شمار</th>
+                    <th>نام</th>
+                    <th>نمبر</th>
+                    <th>قسم</th>
+                    <th>بیلنس</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for supplier in suppliers %}
+                <tr>
+                    <td>{{ supplier.id }}</td>
+                    <td>{{ supplier.name }}</td>
+                    <td>{{ supplier.phone }}</td>
+                    <td>{{ supplier.supplier_type }}</td>
+                    <td>{{ supplier.balance }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

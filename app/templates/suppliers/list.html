@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <a href="{{ url_for('suppliers.add_supplier') }}" class="btn btn-primary mb-3">Add Supplier</a>
+    <h3 class="mt-4" align="center">سیلر لسٹ</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>شمار</th>
+                    <th>نام</th>
+                    <th>نمبر</th>
+                    <th>قسم</th>
+                    <th>بیلنس</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for supplier in suppliers %}
+                <tr>
+                    <td>{{ supplier.id }}</td>
+                    <td>{{ supplier.name }}</td>
+                    <td>{{ supplier.phone }}</td>
+                    <td>{{ supplier.supplier_type }}</td>
+                    <td>{{ supplier.balance }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

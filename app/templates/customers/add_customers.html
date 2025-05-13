@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">کسٹمر فارم</h2>
+    <div class="card p-4 shadow-sm" style="background-color: #d6e9f8;">
+        <form method="POST" action="/customers/add">
+    <div class="row mb-3">
+        <!-- نام (Name) -->
+        <div class="col-md-6">
+            <label class="form-label">نام</label>
+            <input type="text" class="form-control" name="name" required>
+        </div>
+
+        <!-- (Type) قسم -->
+        <div class="col-md-6">
+            <label class="form-label">قسم</label>
+            <select class="form-select" name="type">
+                <option value="کسٹمر">کسٹمر</option>
+                <option value="جنس">جنس</option>
+                <option value="منگل واری">منگل واری</option>
+            </select>
+
+
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!-- (Number) -->
+        <div class="col-md-6">
+            <label class="form-label">نمبر</label>
+            <input type="text" class="form-control" name="number">
+        </div>
+
+        <!--  (Address) -->
+        <div class="col-md-6">
+            <label class="form-label">پتہ</label>
+            <input type="text" class="form-control" name="address">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!-- (rent) -->
+        <div class="col-md-6">
+            <label class="form-label">دیگر</label>
+            <input type="number" class="form-control" name="other_balance" value="0">
+        </div>
+        <div class="col-md-6">
+        <label class="form-label">کیلا/خربوزہ</label>
+            <input type="text" class="form-control" name="banana_melon_balance" value = "0">
+
+    </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary w-100">محفوظ کریں</button>
+</form>
+
+    </div>
+
+    <h3 class="mt-4">کسٹمر لسٹ</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>شمار</th>
+                    <th>نام</th>
+                    <th>نمبر</th>
+                    <th>قسم</th>
+                    <th>پتہ</th>
+                    <th>دیگر بیلنس</th>
+                    <th>کیلا/خربوزہ بیلنس</th>
+                    <th>میزان</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.id }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.number }}</td>
+                    <td>{{ customer.type }}</td>
+                    <td>{{ customer.address }}</td>
+                    <td>{{ customer.other_balance }}</td>
+                    <td>{{ customer.banana_melon_balance }}</td>
+                    <td>{{ customer.banana_melon_balance | int + customer.other_balance | int }}</td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

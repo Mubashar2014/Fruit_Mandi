@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% block content %}
+<div class=" mt-4">
+    <h4>سوڑھ (گھٹکا بلز)</h4>
+
+    <label for="filter-date">تاریخ منتخب کریں:</label>
+    <input type="date" id="filter-date" class="form-control" value="{{ selected_date }}" onchange="filterByDate()">
+    <br>
+<div style="max-height: 400px; overflow-y: auto; border: 0px solid #ccc; padding: 0px;">
+
+    <table class="table table-bordered mt-3" style="font-size: 13px;">
+
+        <thead>
+            <tr>
+                <th>بل نمبر</th>
+                <th>سپلائر</th>
+                <th>گاڑی نمبر</th>
+                <th>مارکہ</th>
+                <th>کل نگ</th>
+                <th>خام بیکری</th>
+                <th>کرایہ لاری</th>
+                <th>ڈاگ و تار</th>
+                <th>منشیانہ</th>
+                <th>مارکیٹ فیس</th>
+                <th>چونگی</th>
+                <th>مزدوری</th>
+                <th>امانت کاٹ</th>
+                <th>کسٹم</th>
+                <th>کرایہ</th>
+                <th>کمیشن</th>
+                <th>میزان اخراجات</th>
+                <th>پختہ بیکری</th>
+                <th>ایکشن</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in bills %}
+            <tr>
+                <td>{{ bill.id }}</td>
+                <td>{{ bill.supplier.name }}</td>
+                <td>{{ bill.car_number }}</td>
+                <td>{{ bill.maarkah }}</td>
+                <td>{{ bill.total_nagg }}</td>
+                <td>{{ bill.kham_bikri }}</td>
+                <td>{{ bill.rent_laari }}</td>
+                <td>{{ bill.daag }}</td>
+                <td>{{ bill.munshiyaana }}</td>
+                <td>{{ bill.market_fees }}</td>
+                <td>{{ bill.chungi }}</td>
+                <td>{{ bill.mazdoori }}</td>
+                <td>{{ bill.amanat }}</td>
+                <td>{{ bill.custom }}</td>
+                <td>{{ bill.extra_rent }}</td>
+                <td>{{ bill.commission }}</td>
+                <td>{{ bill.total_amount }}</td>
+                <td>{{ bill.pukhta_bikri }}</td>
+                <td class="text-center">
+    <div class="d-flex justify-content-center gap-3">
+        <!-- Edit Icon -->
+        <a href="{{ url_for('ghutka.edit_bill', bill_id=bill.id) }}" class="text-warning" title="اپڈیٹ">
+            <i class="fas fa-edit fa-lg"></i>
+        </a>
+
+        <!-- Delete Icon -->
+        <form method="POST" action="{{ url_for('soorh.delete_bill', bill_id=bill.id) }}"
+              onsubmit="return confirm('کیا آپ واقعی اس بل کو حذف کرنا چاہتے ہیں؟');"
+              style="display: inline;">
+            <button type="submit" class="btn btn-link text-danger p-0 m-0" title="حذف">
+                <i class="fas fa-trash-alt fa-lg"></i>
+            </button>
+        </form>
+        <!-- Print Icon -->
+<a href="{{ url_for('soorh.print_receipt', bill_id=bill.id) }}" class="text-success" title="پرنٹ" target="_blank">
+    <i class="fas fa-print fa-lg"></i>
+</a>
+
+    </div>
+</td>
+
+
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+<div class="d-flex mt-4 gap-3">
+    <!-- Left: Customers Summary -->
+    <div class="w-50">
+        <h5>خریدار کا خلاصہ</h5>
+        <div style="max-height: 400px; overflow-y: auto; border: 0px solid black; padding: 0px;">
+
+        <table class="table table-sm table-bordered" style="font-size: 15px;">
+            <thead>
+                <tr>
+                    <th>نام خریدار</th>
+                    <th>کل نگ</th>
+                    <th>روپیہ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for buyer in customers_summary %}
+                <tr>
+                    <td>{{ buyer.customer_name }}</td>
+                    <td>{{ buyer.total_neg }}</td>
+                    <td>{{ buyer.total_rupeh }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        </div>
+
+    <!-- Right: Other Calculations -->
+    <div class="w-50">
+        <h5>مزید حسابات</h5>
+        <div class="border p-3 bg-light rounded">
+            <div class="container mt-4">
+
+    <!-- Banam Farosh -->
+    <div class="row mb-2">
+        <div class="col-md-2 fw-bold">بنام فروش</div>
+        <div class="col-md-3">
+            کیلا/خربوزہ <input type="text" class="form-control form-control-sm" value="{{ other_kela_kharbozeh or 0 }}" id="banam_kela">
+        </div>
+        <div class="col-md-3">
+            دیگر <input type="text" class="form-control form-control-sm" id="banam_deegar" value="{{ other_other or 0 }}">
+        </div>
+        <div class="col-md-2 pt-4">
+             <input type="text" class="form-control form-control-sm" id="banam_total" readonly>
+        </div>
+    </div>
+
+    <!-- Naqdi -->
+    <div class="row mb-2">
+        <div class="col-md-2 fw-bold">نقدی</div>
+        <div class="col-md-3">
+            کیلا/خربوزہ <input type="text" class="form-control form-control-sm" id="naqdi_kela" value="{{ naqdi_kela_kharbozeh or 0 }}">
+        </div>
+        <div class="col-md-3">
+            دیگر <input type="text" class="form-control form-control-sm" id="naqdi_deegar" value="{{ naqdi_other or 0 }}">
+        </div>
+        <div class="col-md-2 pt-4">
+            <input type="text" class="form-control form-control-sm" id="naqdi_total" readonly>
+        </div>
+    </div>
+
+    <!-- Meezan -->
+    <div class="row mb-2">
+        <div class="col-md-2 fw-bold">میزان</div>
+        <div class="col-md-3">
+            <input type="text" class="form-control form-control-sm" id="meezan_total" readonly>
+        </div>
+    </div>
+
+    <!-- Chungi -->
+    <div class="row mb-2">
+        <div class="col-md-2 fw-bold">چونگی</div>
+        <div class="col-md-3">
+            <input type="text" class="form-control form-control-sm" id="chungi_total" value="{{ chungi_sum or 0 }}">
+        </div>
+    </div>
+
+    <!-- Soorh Meezan -->
+    <div class="row mb-2">
+        <div class="col-md-2 fw-bold">سوڑھ میزان</div>
+        <div class="col-md-3">
+            <input type="text" class="form-control form-control-sm" id="soorh_meezan" readonly>
+        </div>
+    </div>
+
+</div>
+
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<script>
+function filterByDate() {
+    const selectedDate = document.getElementById("filter-date").value;
+    window.location.href = `/soorh/view_ghutka?date=${selectedDate}`;
+
+}
+function parseFloatOrZero(value) {
+    const num = parseFloat(value);
+    return isNaN(num) ? 0 : num;
+}
+
+function updateTotals() {
+    const banam_kela = parseFloatOrZero(document.getElementById("banam_kela").value);
+    const banam_deegar = parseFloatOrZero(document.getElementById("banam_deegar").value);
+    const naqdi_kela = parseFloatOrZero(document.getElementById("naqdi_kela").value);
+    const naqdi_deegar = parseFloatOrZero(document.getElementById("naqdi_deegar").value);
+    const chungi = parseFloatOrZero(document.getElementById("chungi_total").value);
+
+    const banam_total = banam_kela + banam_deegar;
+    const naqdi_total = naqdi_kela + naqdi_deegar;
+    const meezan_total = banam_total + naqdi_total;
+    const soorh_meezan = meezan_total + chungi;
+
+    document.getElementById("banam_total").value = banam_total.toFixed(2);
+    document.getElementById("naqdi_total").value = naqdi_total.toFixed(2);
+    document.getElementById("meezan_total").value = meezan_total.toFixed(2);
+    document.getElementById("soorh_meezan").value = soorh_meezan.toFixed(2);
+}
+
+// Add event listeners
+const inputs = [
+    "banam_kela", "banam_deegar",
+    "naqdi_kela", "naqdi_deegar",
+    "chungi_total"
+];
+
+inputs.forEach(id => {
+    document.getElementById(id).addEventListener("input", updateTotals);
+});
+
+updateTotals();
+</script>
+
+{% endblock %}
